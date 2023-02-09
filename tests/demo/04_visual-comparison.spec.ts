@@ -1,18 +1,19 @@
 import test, { expect } from "@playwright/test";
 
-test("Tracing with context tracer", async ({ context }) => {
-  await context.tracing.start({
-    snapshots: true,
-    screenshots: true,
-  });
-  const page = await context.newPage();
+test.use({
+  viewport: { width: 1280, height: 720 },
+});
 
-  await context.tracing.startChunk();
+test("Visual comparison", async ({ page }) => {
   await page.goto("https://www.saucedemo.com/");
+
+  await expect(page).toHaveScreenshot();
 
   await page.getByPlaceholder("Username").fill("standard_user");
   await page.getByPlaceholder("Password").fill("secret_sauce");
   await page.getByText("LOGIN").click();
+
+  await expect(page).toHaveScreenshot();
 
   await page
     .locator(".inventory_item")
@@ -32,6 +33,8 @@ test("Tracing with context tracer", async ({ context }) => {
     .getByText("REMOVE")
     .click();
 
+  await expect(page).toHaveScreenshot();
+
   await page.locator(".shopping_cart_link").click();
 
   await expect(page).toHaveScreenshot();
@@ -50,5 +53,5 @@ test("Tracing with context tracer", async ({ context }) => {
 
   await page.getByText("FINISH").click();
 
-  await context.tracing.stopChunk({ path: "end-to-end_trace.zip" });
+  await expect(page).toHaveScreenshot();
 });

@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("get started link long version", async ({ page }) => {
+test("get started link short version", async ({ page }) => {
   // Navigation
   await page.goto("https://playwright.dev/");
 

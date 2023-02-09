@@ -1,5 +1,7 @@
 import test from "@playwright/test";
 
+// Needs to run via headed mode
+// npx playwright test -g "Tracing with pause" --headed
 test("Tracing with pause", async ({ page }) => {
   await page.goto("https://www.saucedemo.com/");
   await page.pause();
